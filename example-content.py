@@ -1,6 +1,10 @@
 import os
 import json
 from pytube import YouTube
+import numpy as np
+import re
+
+cache_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "cache")
 
 
 def getId(link: str):
@@ -11,30 +15,29 @@ def getLink(id: str):
     return f"https://youtu.be/watch?v={id}"
 
 
-def download(video: str):
-    YouTube(video).streams.filter(
-        progressive=True, file_extension="mp4", use_oauth=True, allow_oauth_cache=True
+def download(video_link: str, path: str):
+    yt = YouTube(video_link)
+    yt.streams.filter(
+        progressive=True, file_extension="mp4"
     ).get_highest_resolution().download(
-        output_path=os.path.join(os.path.dirname(os.path.abspath(__file__)), "src"),
-        filename=getId(video) + ".mp4",
+        output_path=path,
+        filename=yt.video_id + ".mp4",
     )
 
 
-def search(search=None, extension=None):
-    matching_files = []
-    sourcePath = os.path.join(os.path.dirname(os.path.abspath(__file__)), "src")
-    for filename in os.listdir(sourcePath):
-        if extension is not None and not filename.endswith(extension):
-            continue
-        if search is not None and search not in filename:
-            continue
-        matching_files.append(sourcePath, filename)
-    return matching_files
+def cache(file_name: str, file_extension: str):
+    if not os.path.exists(os.path.join(cache_path, file_name, file_extension)):
+        download(file_name, cache_path)
+        print(f"✅  Cached {file_name}.{file_extension}")
 
 
-def get(id: str):
-    return os.path.join(os.path.dirname(os.path.abspath(__file__)), "src", id)
+def search(regex: str):
+    with open(f"{cache_path}/files.json") as f:
+        files = np.array(json.load(f))
+    return files[
+        np.vectorize(lambda file_name: bool(re.match(regex, file_name)))(files)
+    ]
 
 
 if __name__ == "__main__":
-    download(input("Enter the video URL: "))
+    print(download(getLink("lo6rBzkYw14"), cache_path))

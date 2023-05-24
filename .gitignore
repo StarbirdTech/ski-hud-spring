@@ -1,4 +1,10 @@
-.pt
+# yolov8 files
+*.pt
+runs/
+
+# cache files
+cache/*
+!cache/files.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
