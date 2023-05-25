@@ -2,6 +2,7 @@ import os
 from dotenv import load_dotenv
 from ultralytics import YOLO
 from roboflow import Roboflow
+import torch
 
 
 def get_dataset(project_workspace, project_name, project_version):
@@ -22,10 +23,18 @@ def get_dataset(project_workspace, project_name, project_version):
     return os.path.join(project_path, "data.yaml")
 
 
-YOLO("yolov8n.pt").train(
-    data=get_dataset("lloyd","crossed-skis-detection", 1),
-    imgsz=640,
-    epochs=50,
-    batch=8,
-    name="yolov8n_v8_50e",
-)
+def train(dataset):
+    if not torch.cuda.is_available():
+        input("⚠️  Torch cannot access CUDA - Press ENTER to continue")
+
+    YOLO("yolov8n.pt").train(
+        data=dataset,
+        imgsz=640,
+        epochs=50,
+        batch=8,
+        name="yolov8n_v8_50e",
+    )
+
+
+if __name__ == "__main__":
+    train(get_dataset("lloyd", "crossed-skis-detection", 1))
