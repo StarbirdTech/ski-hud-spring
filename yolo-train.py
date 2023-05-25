@@ -23,7 +23,7 @@ def get_dataset(project_workspace, project_name, project_version):
 
 
 YOLO("yolov8n.pt").train(
-    data=get_dataset("crossed-skis-detection", 1),
+    data=get_dataset("lloyd","crossed-skis-detection", 1),
     imgsz=640,
     epochs=50,
     batch=8,
