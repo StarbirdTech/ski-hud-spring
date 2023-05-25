@@ -1,7 +1,7 @@
 import platform
 from ultralytics import YOLO
 
-model = YOLO("yolov8n-seg.pt")
+model = YOLO("yolov8n-crossed-ski-1.pt")
 
 print("1 - System Webcam")
 print("2 - Video File")
@@ -22,9 +22,8 @@ elif option == 2:
     )
 elif option == 3:
     model.predict(
-        "cache/drop.png",
+        "cache/crossed-ski-1.png",
         show=True,
-        boxes=False,
-        retina_masks=True,
+        boxes=True,
         save=True,
     )
