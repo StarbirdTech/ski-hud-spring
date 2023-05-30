@@ -1,7 +1,7 @@
 import platform
 from ultralytics import YOLO
 
-model = YOLO("yolov8n-crossed-ski-1.pt")
+model = YOLO("yolov8n-seg.pt")
 
 print("1 - System Webcam")
 print("2 - Video File")
@@ -15,10 +15,11 @@ if option == 1:
         model.predict(source="0", show=True, boxes=False, retina_masks=True)
 elif option == 2:
     model.predict(
-        "cache/lo6rBzkYw14.mp4",
+        "/Users/arisinert/Git/ski-hud-spring/src/projectionCUT.mp4",
         show=True,
         boxes=False,
         retina_masks=True,
+        save=True,
     )
 elif option == 3:
     model.predict(
