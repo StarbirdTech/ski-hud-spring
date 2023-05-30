@@ -1,8 +1,5 @@
 import os
-import json
 from pytube import YouTube
-import numpy as np
-import re
 
 cache_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "cache")
 
@@ -25,19 +22,12 @@ def download(link: str, path: str):
     )
 
 
-def cache(file_name: str, file_extension: str):
+def get(file_name: str, file_extension: str):
     if not os.path.exists(os.path.join(cache_path, file_name, file_extension)):
         download(file_name, cache_path)
         print(f"✅  Cached {file_name}.{file_extension}")
-
-
-def search(regex: str):
-    with open(f"{cache_path}/files.json") as f:
-        files = np.array(json.load(f))
-    return files[
-        np.vectorize(lambda file_name: bool(re.match(regex, file_name)))(files)
-    ]
+    return os.path.join(cache_path, file_name, file_extension)
 
 
 if __name__ == "__main__":
-    print(download("https://www.youtube.com/watch?v=idCX7o-9Hr4", cache_path))
+    download(input("YouTube Video Link: "), cache_path)
