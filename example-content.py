@@ -15,13 +15,13 @@ def getLink(id: str):
     return f"https://youtu.be/watch?v={id}"
 
 
-def download(video_link: str, path: str):
-    yt = YouTube(video_link)
-    yt.streams.filter(
+def download(link: str, path: str):
+    video = YouTube(link)
+    video.streams.filter(
         progressive=True, file_extension="mp4"
     ).get_highest_resolution().download(
         output_path=path,
-        filename=yt.video_id + ".mp4",
+        filename=video.video_id + ".mp4",
     )
 
 
@@ -40,4 +40,4 @@ def search(regex: str):
 
 
 if __name__ == "__main__":
-    print(download(getLink("lo6rBzkYw14"), cache_path))
+    print(download("https://www.youtube.com/watch?v=idCX7o-9Hr4", cache_path))
