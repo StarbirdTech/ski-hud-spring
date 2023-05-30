@@ -40,4 +40,4 @@ def search(regex: str):
 
 
 if __name__ == "__main__":
-    print(download(getLink("lo6rBzkYw14"), cache_path))
+    print(download("https://www.youtube.com/watch?v=uZsp5JxrpPg", cache_path))
