@@ -22,16 +22,12 @@ def download(link: str, path: str):
     )
 
 
-def get(file_name: str, file_extension: str):
-    if not os.path.exists(os.path.join(cache_path, file_name, file_extension)):
-        download(file_name, cache_path)
+def getFile(file_name: str, file_extension: str):
+    if not os.path.exists(os.path.join(cache_path, f"{file_name}.{file_extension}")):
+        download(getLink(file_name), cache_path)
         print(f"✅  Cached {file_name}.{file_extension}")
-    return os.path.join(cache_path, file_name, file_extension)
+    return os.path.join(cache_path, f"{file_name}.{file_extension}")
 
 
 if __name__ == "__main__":
-<<<<<<< HEAD
-    print(download("https://www.youtube.com/watch?v=uZsp5JxrpPg", cache_path))
-=======
     download(input("YouTube Video Link: "), cache_path)
->>>>>>> 3486b69228f86e6269c2fc76483a72216696333f

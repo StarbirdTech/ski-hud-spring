@@ -1,5 +1,6 @@
 import platform
 from ultralytics import YOLO
+from exampleContent import getFile
 
 model = YOLO("yolov8n-seg.pt")
 
@@ -15,7 +16,7 @@ if option == 1:
         model.predict(source="0", show=True, boxes=False, retina_masks=True)
 elif option == 2:
     model.predict(
-        "/Users/arisinert/Git/ski-hud-spring/src/projectionCUT.mp4",
+        getFile("uZsp5JxrpPg", "mp4"),
         show=True,
         boxes=False,
         retina_masks=True,
