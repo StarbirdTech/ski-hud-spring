@@ -1,7 +1,9 @@
 import os
 import platform
 from ultralytics import YOLO
+from exampleContent import getFile
 
+model = YOLO("yolov8n-seg.pt")
 
 print("1 - System Webcam")
 print("2 - Video File")
